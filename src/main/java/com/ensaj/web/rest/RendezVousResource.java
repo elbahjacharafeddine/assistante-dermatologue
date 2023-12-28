@@ -594,4 +594,21 @@ public class RendezVousResource {
         //
         return null;
     }
+
+    @GetMapping("/about-dermatologues")
+    public Map<String, Long> aboutDermatologues() {
+        Map<String, Long> data = new HashMap<>();
+        List<Dermatologue> dermatologues = dermatologueRepository.findAll();
+
+        for (Dermatologue d : dermatologues) {
+            Optional<User> user = userRepository.findById(d.getId());
+
+            Instant debutAujourdhui = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant();
+            Instant debutDemain = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+            List<RendezVous> liste = rendezVousRepository.findTodayTrueStatusByDermatologues(d.getId(), debutAujourdhui, debutDemain);
+            data.put(user.get().getFirstName() + " " + user.get().getLastName(), Long.valueOf(liste.size()));
+        }
+        return data;
+    }
 }

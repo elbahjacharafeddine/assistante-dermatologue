@@ -49,7 +49,10 @@ const AppRoutes = () => {
   return (
     <div className="view-routes">
       <ErrorBoundaryRoutes>
-        <Route path="/dashboard" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={<Home isAuthenticated={isAuthenicated} isAdmin={userData && userData.authorities[0] === 'ROLE_ADMIN' ? true : null} />}
+        />
         <Route index path="login" element={<Login />} />
         {/* Dermatologue patients Liste */}
         <Route path="/dermatologue/patientsliste" element={<PatientsList />} />

@@ -65,6 +65,13 @@ const Home = ({ isAuthenticated, isAdmin }) => {
         console.log(error);
       });
   }, []);
+
+  const timingForxtitle = () => {
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 1);
+    const date = currentDate.toISOString().slice(0, 10);
+    return date;
+  };
   if (isAuthenticated && isAdmin) {
     return (
       <div className="home" style={{ overflow: 'auto' }}>
@@ -126,7 +133,7 @@ const Home = ({ isAuthenticated, isAdmin }) => {
                   <Col md="12" style={{ marginTop: '50px' }}>
                     <ColumnChart
                       data={dataDermatologues}
-                      xtitle={`Time: ${new Date().toISOString().slice(0, 10)}`}
+                      xtitle={`Time: ` + timingForxtitle()}
                       ytitle="Number of Appointments"
                       download={{ background: '#fff' }}
                       colors={['#FF7125', '#DDA9F5', '#00DCF7']}
